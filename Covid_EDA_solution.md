@@ -79,3 +79,62 @@ order by death_percentage_per_continent desc
 ```
 <img width="283" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/1ae2193d-95ee-4cea-8e54-8f22abbc8c65">
 
+### 6. What is the number of average new case per day by country ?
+#### Solution:
+```sql
+select location as country, round(avg(new_cases),0) as average_new_cases
+from CovidDeaths
+where continent is not null
+group by location
+order by average_new_cases desc
+```
+<img width="287" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/8644494f-ddb8-4e60-a3da-dfd171aff929">
+
+### 7. What is the highest new case in each country in 2020 and 2021 ?
+#### Solution:
+```sql
+select country,
+sum(case when Year = '2020' then max_cases end) as '2020',
+sum(case when Year = '2021' then max_cases end) as '2021'
+FROM
+(
+select country, strftime('%Y',SomeDate) as Year, max(new_cases) max_cases
+FROM
+(select location as country, (substr(date, 7, 4) || '-' || substr(date, 4, 2) || '-' || substr(date, 1, 2)) AS SomeDate, new_cases
+from CovidDeaths
+where continent is not NULL)
+group by 1,2)
+group by country
+```
+<img width="283" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/ef1f809d-93ec-4e94-87b9-cf86e82c6014">
+
+### 8. What is the month when the highest new case happened in each country in 2020 and 2021 ?
+#### Solution:
+```sql
+select country, strftime('%Y',SomeDate) as Year, strftime('%m',SomeDate) as Month, max(new_cases) max_cases
+FROM
+(select location as country, (substr(date, 7, 4) || '-' || substr(date, 4, 2) || '-' || substr(date, 1, 2)) AS SomeDate, new_cases
+from CovidDeaths
+where continent is not NULL)
+group by 1, 2
+```
+<img width="310" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/3a6f772c-c678-4a6f-8674-672716190a29">
+
+### 9. What is percentage of population that has received at least one Covid Vaccine ?
+#### Solution:
+```sql
+select a.location as country, round(cast(a.total_people_vaccinated as real)/cast(b.total_population as real),6)*100 as percentage_of_vaccinated_people
+from
+(
+(select iso_code, location, max(people_vaccinated) as total_people_vaccinated 
+from CovidVaccinations
+where continent is not NULL
+group by location) a
+join
+(select iso_code, location, max(population) as total_population
+from CovidDeaths
+where continent is not NULL
+group by location) b
+on a.iso_code = b.iso_code)
+```
+<img width="365" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/381d1d7d-c737-476f-9288-2a531d0782f8">
