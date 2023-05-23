@@ -138,3 +138,32 @@ group by location) b
 on a.iso_code = b.iso_code)
 ```
 <img width="365" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/381d1d7d-c737-476f-9288-2a531d0782f8">
+
+### 10. What is percentage of people who fully vaccinated from the total population ?
+#### Solution:
+```sql
+select a.location as country, round(cast(a.total_people_fully_vaccinated as real)/cast(b.total_population as real),6)*100 as percentage_fully_vaccinated_people
+from
+(
+(select iso_code, location, max(people_fully_vaccinated) as total_people_fully_vaccinated 
+from CovidVaccinations
+where continent is not NULL
+group by location) a
+join
+(select iso_code, location, max(population) as total_population
+from CovidDeaths
+where continent is not NULL
+group by location) b
+on a.iso_code = b.iso_code)
+```
+<img width="361" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/042538a2-bbd5-4b90-acfe-ad4ba39a3de3">
+
+### 11. What is percentage of people who fully vaccinated from the total vaccinated people ?
+#### Solution:
+```sql
+select iso_code, location, round(cast(max(people_fully_vaccinated) as real)/ cast(max(people_vaccinated) as real),4) percentage_of_fully_vaccinated_people
+from CovidVaccinations
+where continent is not NULL
+group by location
+```
+<img width="417" alt="image" src="https://github.com/rindangchi/SQL-Covid-EDA/assets/10241058/9566b99c-edd7-4093-845f-9544182ab900">
