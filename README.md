@@ -15,6 +15,7 @@ This project is to analyst the covid death and vaccination data to answer below 
 10. What is percentage of people who fully vaccinated from the total population ?
 11. What is percentage of people who fully vaccinated from the total vaccinated people ?
 
+The solution is provided on this page [Solution](https://github.com/rindangchi/SQL-Covid-EDA/blob/main/Covid_EDA_solution.md)
 
 ## Dataset
 The dataset used for this project is Covid deaths and Covid Vaccination. Covid death data contains the number of deaths of each country and continent as well as total death around the world. 
