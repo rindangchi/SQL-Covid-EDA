@@ -15,8 +15,6 @@ This project is to analyst the covid death and vaccination data to answer below 
 10. What is percentage of people who fully vaccinated from the total population ?
 11. What is percentage of people who fully vaccinated from the total vaccinated people ?
 
-The solution is provided on this page [Solution](https://github.com/rindangchi/SQL-Covid-EDA/blob/main/Covid_EDA_solution.md)
-
 ## Dataset
 The dataset used for this project is Covid deaths and Covid Vaccination. Covid death data contains the number of deaths of each country and continent as well as total death around the world. 
 While covid vaccination contains the number of people who already vaccinated in each country. The data is from April 2020 until April 2021.
@@ -26,3 +24,7 @@ For the first step of this post not all data in the columns will be used, the an
 ## Technologies
 SQLite is used to do the analysis, SQLite was chosen because it is light and easy to use for beginner. 
 To download the SQLite DB browser you can go to this link [SQLite](https://sqlitebrowser.org/dl/)
+
+## Solution
+
+The solution is provided on this page [Solution](https://github.com/rindangchi/SQL-Covid-EDA/blob/main/Covid_EDA_solution.md)
